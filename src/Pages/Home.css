@@ -1,8 +1,72 @@
+.footer{
+    background-color: rgb(100, 102, 94);
+    color: aliceblue;
+}
 .footer-container{
-    background-color: black;
     padding: 4rem 0 2rem 0;
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    margin-top: -20px;
     color: aliceblue;
+}
+.about{
+    text-align: left;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: auto;
+    display: block;
+    left: 0;
+}
+.footer-subscription-heading{
+    font-size: large;
+    padding-bottom: 0.7rem;
+}
+.footer-subscription-text{
+    font-size: medium;
+    padding: 1rem 0.5rem 1rem 0.7rem;
+    line-height: 2.5;
+}
+.footer-lists{
+    margin-top: 30px;
+}
+.footer-lists li a{
+    text-decoration: none;
+    color: aliceblue;
+}
+.links{
+    margin-right: auto;
+    
+}
+.links > ul{
+    list-style-type: none;
+}
+.bottom{
+    height: auto; 
+    display:block;
+}
+.bottom a{
+    text-decoration: none;
+    color: aliceblue;
+}
+
+@media only screen and (max-width:1200px){
+    .footer-container{
+        background-color: rgb(97, 124, 0);
+        padding: 4rem 0 2rem 0;
+        display: flex;
+        flex-direction: column;
+        margin-top: -20px;
+        color: aliceblue;
+    }
+    .about{
+        text-align: left;
+        margin-top: 20px;
+        display: block;
+        left: 0;
+    }
+    .bottom{
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
 }
