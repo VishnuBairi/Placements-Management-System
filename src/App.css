@@ -1,0 +1,53 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+.Navbar a{
+  margin:20px;
+  color: white;
+  text-decoration: none;
+  background-color: #65cfec;
+}
+.Navbar .inernav{
+  margin-top: 20px;
+  margin-right: 10px;
+}
+img{
+  margin-top: -20px;
+  display: inline;
+  left: 0;
+  object-fit: contain;
+  width: 100%;
+}
+a:hover{
+  box-shadow: 0 6px 20px rgb(0 0 0  / 17%);
+}
+.Navbar img{
+  margin-top: auto;
+}
+.Navbar{
+  background-color: #65cfec;
+  margin-bottom: 20px;
+  text-align: end;
+  display: grid;
+  grid-template-columns: 10% 90%;
+}
+@media only screen and (max-width: 600px) {
+  .Navbar{
+    display: flex;
+    flex-flow: column;
+    padding:unset;
+  }
+  a{
+    font-size: 15px;
+    margin: auto;
+    padding: unset;
+    text-align: center;
+  }
+}
+
+
