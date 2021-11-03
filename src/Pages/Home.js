@@ -41,7 +41,7 @@ return <>
                 &copy; ashok_nalla, nimmala_bhoomika, dhanalaxmi_bellala
                 &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; Follow Us : <a href="https://www.instagram.com/_ashok_nalla/"> <InstagramIcon/> </a>
                 &emsp;<a href="https://twitter.com/Ashoknalla040"><TwitterIcon/></a>
-                &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; Contact Us : 9182864354
+                &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; Contact Us : 91828***54
             </div>
         </div>
 </>
