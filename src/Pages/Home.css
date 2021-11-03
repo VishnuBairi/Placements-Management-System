@@ -51,7 +51,6 @@
 
 @media only screen and (max-width:1200px){
     .footer-container{
-        background-color: rgb(97, 124, 0);
         padding: 4rem 0 2rem 0;
         display: flex;
         flex-direction: column;
