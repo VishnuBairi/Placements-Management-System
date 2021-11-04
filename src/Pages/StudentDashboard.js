@@ -1,11 +1,11 @@
 import React from 'react'
 import { useEffect,useState } from 'react';
 import InsertChartIcon from '@mui/icons-material/InsertChart';
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import BusinessIcon from '@mui/icons-material/Business';
-import AddBusinessIcon from '@mui/icons-material/AddBusiness';
-import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import HelpIcon from '@mui/icons-material/Help';
+import FeedbackIcon from '@mui/icons-material/Feedback';
+import SettingsIcon from '@mui/icons-material/Settings';
 import PersonIcon from '@mui/icons-material/Person';
 import MenuIcon from '@mui/icons-material/Menu';
 import './Dashboard.css'
@@ -40,20 +40,20 @@ function StudentDashboard() {
                                 <span>Dashboard</span> </div>
                         </li>
                         <li>
-                            <div id='a' onClick={() => { document.getElementsByClassName("add-student")[0].style.display = 'block' }}><span><PersonAddAlt1Icon /></span>
+                            <div id='a' onClick={() => { document.getElementsByClassName("add-student")[0].style.display = 'block' }}><span><AccountCircleIcon /></span>
                                 <span>Account</span> </div>
                         </li>
                         <li>
-                            <div id='a' onClick={() => { document.getElementsByClassName("view-students")[0].style.display = 'block' }}><span><PersonSearchIcon /></span>
+                            <div id='a' onClick={() => { document.getElementsByClassName("view-students")[0].style.display = 'block' }}><span><SettingsIcon /></span>
                                 <span>Settings</span> </div>
                         </li>
                         <li>
-                            <div id='a' onClick={() => { document.getElementsByClassName("add-company")[0].style.display = 'block' }}><span><AddBusinessIcon /></span>
+                            <div id='a' onClick={() => { document.getElementsByClassName("add-company")[0].style.display = 'block' }}><span><FeedbackIcon /></span>
                                 <span>Feedback</span> </div>
                         </li>
 
                         <li>
-                            <div id='a' href=""><span><BusinessIcon /></span>
+                            <div id='a' href=""><span><HelpIcon /></span>
                                 <span>Help </span> </div>
                         </li>
                         <li>
