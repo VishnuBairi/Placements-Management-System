@@ -74,6 +74,103 @@ a:hover{
 }
 .login > .close > div {
   cursor: pointer;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.login .log .avatar{
+  text-align: center;
+  margin-left: 90px;
+  margin-right: 50px;
+  margin-top: 20px;
+}
+.login > .log > form{
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+.login > .log > form > input{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-bottom: 1.5px solid black;
+}
+.login > .log > form > input:focus{
+  outline: none;
+}
+.login > .log > form > button{
+  margin-top: 10px;
+  height: 30px;
+  background-color: gray;
+  color: aliceblue;
+}
+.login .log .forget{
+  font-size:15px;
+  margin-top: 20px;
+  font-weight:100 ;
+}
+.login .log .forget span{
+  color: blue;
+  cursor: pointer;
+}
+
+.admin-log{
+  width: 300px;
+  height: 400px;
+  position: absolute;
+  background-color: white;
+  box-shadow:  0 0 100px rgba(0, 0, 0, 0.87);
+  top:0;
+  padding: 40px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  margin: auto;
+  display: none;
+}
+.admin-log > div {
+  font-size: 30px;
+  font-weight: 700;
+  display: block;
+  text-align: center;
+}
+.admin-log > .close > div {
+  cursor: pointer;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.admin-log .admin-login .avatar{
+  text-align: center;
+  margin-left: 90px;
+  margin-right: 50px;
+  margin-top: 20px;
+}
+.admin-log > .admin-login > form{
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+.admin-log > .admin-login > form > input{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-bottom: 1.5px solid black;
+}
+.admin-log > .admin-login > form > input:focus{
+  outline: none;
+}
+.admin-log > .admin-login > form > button{
+  margin-top: 10px;
+  height: 30px;
+  background-color: gray;
+  color: aliceblue;
+}
+.admin-log .admin-login .forget{
+  font-size:15px;
+  margin-top: 20px;
+  font-weight:100 ;
+}
+.admin-log .admin-login .forget span{
+  color: blue;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 600px) {

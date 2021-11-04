@@ -52,7 +52,7 @@ function Dashboard() {
         <input type="checkbox" id="nav-toggle"/>
         <div className="sidebar">
                 <div className="sidebar-brand">
-                    <h1><span><img src="https://www.cbit.ac.in/wp-content/themes/CBIT/images/logo.png" height='80' width='100'/></span></h1> 
+                    <h1><span><img alt="cbit" src="https://www.cbit.ac.in/wp-content/themes/CBIT/images/logo.png" height='80' width='100'/></span></h1> 
                 </div>
 
                 <div className="sidebar-menu">
