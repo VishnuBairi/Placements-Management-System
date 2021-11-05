@@ -13,7 +13,7 @@ import Companies from './Companies';
 import { db } from '../Firebase';
 function StudentDashboard() {
     var [companies, setCompanies] = useState([]);
-    useEffect(async () => {
+    useEffect(() => {
         db.collection("Companies").onSnapshot((snapshot) => {
             setCompanies(snapshot.docs.map((doc) => ({
                 cname: doc.data().cName,
@@ -21,10 +21,18 @@ function StudentDashboard() {
                 cutOff: doc.data().cutOff,
                 branches : doc.data().branches,
                 date: doc.data().date,
+                description:doc.data().description,
             })
             ))
         })
     }, [])
+
+
+    useEffect(()=>{
+        //let name = document.getElementById()
+        const user = db.collection("Students");
+        //const snapshot = user.where('sname','==',name).get();
+    },[])
     return (
         <div>
             <input type="checkbox" id="nav-toggle" />
@@ -75,8 +83,8 @@ function StudentDashboard() {
                     <div className="user-wrapper">
                         <span> <PersonIcon /></span>
                         <div>
-                            <h4>Student Name</h4>
-                            <h6>roll number</h6>
+                            <h4>Nalla Ashok</h4>
+                            <h6>160119733314</h6>
                         </div>
                     </div>
                 </header>
@@ -136,6 +144,7 @@ function StudentDashboard() {
                                     cutOff={company.cutOff}
                                     branches={company.branches}
                                     date={company.date}
+                                    description={company.description}
 
                                 />
                             })}

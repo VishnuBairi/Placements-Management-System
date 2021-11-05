@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2? family=Poppins:wght@300;400;500;600&display=swap');
 :root{
     --main-color:	#65cfec;
-    
-   
 }
 *{
     padding:0;
@@ -149,37 +147,86 @@ main{
     padding: 2.3rem 1rem 2rem 1.3rem;
     display: block;
     border-radius: 7px;
-    box-shadow:  2px 2px 30px rgba(0, 0, 0, 0.17);
+    box-shadow:  1px 1px 10px #0a0a0a;
 }
 
 .cards .card-single .box .company-name{
 text-align: left;
-font-size:25px;
-    
+font-family: Arial, Helvetica, sans-serif;
+font-size:27px;
+font-weight: bold;
 }
 .cards .card-single .box .title{
 text-align:left;
-font-weight:700px;
-font-size:19px;
+font-size:17px;
+font-weight:normal;
+font-family: Arial, Verdana, serif;
 padding-top:10px;
 }
 .cards .card-single .box .min-qualify{
     text-align:left;
     font-size:17px;
-    padding-top:13px;
+    font-weight:normal;
+    font-family: Arial, Verdana, serif;
   
 }
 .cards .card-single .box .eligible{
         text-align:left;
         font-size:17px;
+        font-weight:normal;
+        font-family: Arial, Verdana, serif;
 }
 .cards .card-single .box .last-date{
     text-align:left;
     font-size:17px;
+    font-weight:normal;
+    font-family: Arial, Verdana, serif;
 }
+.cards .card-single .box .description{
+    text-align:left;
+    font-size:17px;
+    font-weight:normal;
+    font-family: Arial, Verdana, serif;
+}
+.cards .card-single .box .viewmore{
+    display:inline-block;
+    margin-top: 9px;
+    color:blue;
+    text-decoration: underline;
+    cursor:pointer;
+    justify-content:right ;
+    left : 0;
+}
+.cards .card-single .box .buttons{
+    display: flex;
+    justify-content: space-between;
+}
+.cards .card-single .box .Cancel button{
+    display:inline-block;
+    margin-top: 9px;
+    color:aliceblue;
+    background-color: gray;
+    cursor:pointer;
+    width: 90px;
+    height: 30px;
+    border-radius: 5px;
+    margin-left:auto;
+}
+.cards .card-single .box .Apply button{
+    display:inline-block;
+    margin-top: 9px;
+    color:aliceblue;
+    background-color: gray;
+    cursor:pointer;
+    width: 90px;
+    height: 30px;
+    border-radius: 5px;
+    margin-right:auto;
+}
+
 .add-student{
     width: calc(100% - 300px);
-    height: calc(100% - 50px);
+    height: calc(100% - 160px);
     position: absolute;
     background-color: white;
     box-shadow:  0 0 100px rgba(0, 0, 0, 0.87);
@@ -201,6 +248,29 @@ padding-top:10px;
 .add-student > .student{
     text-align: center;
 }
+.add-student > .student > form{
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+  }
+  .add-student > .student > form > input{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: none;
+    border-bottom: 1.5px solid black;
+  }
+  .add-student > .student > form > input:focus{
+    outline: none;
+  }
+  .add-student > .student > form > button{
+    margin-top: 20px;
+    height: 30px;
+    background-color: gray;
+    color: aliceblue;
+  }
+  .add-student > .student > form > button:hover{
+    cursor: pointer;
+  }
 .view-students{
     width: calc(100% - 300px);
     height: calc(100% - 50px);
@@ -226,6 +296,16 @@ padding-top:10px;
     text-align: center;
 }
 
+.student-box{
+    margin-top: 7px;
+    padding: 2.3rem 1rem 2rem 1.3rem;
+    display: flex;
+    border-radius: 7px;
+    box-shadow:  1px 1px 10px #0a0a0a;
+    font-size:19px;
+    font-weight: 400;
+    justify-content:space-between;
+}
 .add-company{
     width: calc(100% - 300px);
     height: calc(100% - 50px);
@@ -240,6 +320,7 @@ padding-top:10px;
     z-index: 9999;
     margin: auto;
     display: none;
+   
 }
 .add-company > div {
     font-size: 30px;

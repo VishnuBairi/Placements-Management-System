@@ -139,7 +139,6 @@ main{
     display:flex;
     align-items:center;
 }
-
 .cards .card-single{
     display: flex;
     flex-direction: column;

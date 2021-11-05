@@ -1,6 +1,22 @@
 import React from "react";
 import Avatar from '@mui/material/Avatar';
+import { useState } from "react";
+import { db } from "../Firebase";
+import {Switch , Link, Router} from 'react-router-dom'
 function Nav() {
+    const [user,setUser] = useState();
+    const login = (e) =>{
+        e.preventDefault();
+        let sid = document.getElementById('user').value;
+        //let spass = document.getElementById('pass').value;
+        const details = db.collection("Students");
+        const snapshot = details.where('suser','==',sid).get();
+        setUser(snapshot.docs.map((doc)=>({
+            sid:doc.data().suser,
+            sname : doc.data().sname,
+        })))
+        console.log(user);
+    }
     return (
         <>
     <div className='Navbar'>
@@ -23,7 +39,7 @@ function Nav() {
                 <form>
                     <input id="user" placeholder="User Id" required/> 
                     <input id='pass' placeholder='Password' type='password' required/>
-                    <button type='submit' >Login</button>
+                    <button type='submit'onClick={login} >Login</button>
                 </form>
                 <div className="forget">
                     Forgot Password? <span>Reset</span>

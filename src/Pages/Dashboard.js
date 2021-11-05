@@ -10,6 +10,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import MenuIcon from '@mui/icons-material/Menu';
 import './Dashboard.css'
 import Companies from './Companies';
+import Students from './Students';
 import { db } from '../Firebase';
 function Dashboard() {
     var [companies, setCompanies] = useState([]);
@@ -18,6 +19,7 @@ function Dashboard() {
             setCompanies(snapshot.docs.map((doc) => ({
                 cname: doc.data().cName,
                 title: doc.data().title,
+                description:doc.data().description,
                 cutOff: doc.data().cutOff,
                 branches : doc.data().branches,
                 date: doc.data().date,
@@ -26,7 +28,32 @@ function Dashboard() {
         })
     }, [])
 
-    
+    var [students, setStudents] = useState([]);
+    useEffect(async () => {
+        db.collection("Students").onSnapshot((snapshot) => {
+            setStudents(snapshot.docs.map((doc) => ({
+                sname: doc.data().sname,
+                suser: doc.data().suser,
+                semail : doc.data().semail,
+            })
+            ))
+        })
+    }, [])
+
+
+    const addStudent = (e) => {
+        e.preventDefault();
+        let name = document.getElementById('sname').value;
+        let suser = document.getElementById('suser').value;
+        let semail = document.getElementById('semail').value;
+        db.collection("Students").add({
+            sname : name,
+            suser : suser,
+            spass : suser,
+            semail : semail, 
+        })
+        document.getElementById('sform').reset();
+    }
     const addCompany = (e) => {
         e.preventDefault();
         let name = document.getElementById('name').value;
@@ -106,9 +133,12 @@ function Dashboard() {
                     <div onClick={() => { document.getElementsByClassName("add-student")[0].style.display = 'none' }} >X</div>
                 </div>
                 <div className='student'>
-                    Here we Post
-                    <form>
-                        {/*Add Student Details*/}
+                    Add Student Details
+                    <form id='sform'>
+                        <input placeholder="Student Name" id="sname" required/>
+                        <input placeholder="Student Id" id="suser" required/>
+                        <input type='email' placeholder="Email Id" id="semail" required/>
+                        <button type='submit' onClick={addStudent}>Add Student</button>
                     </form>
                 </div>
         </div>
@@ -119,9 +149,15 @@ function Dashboard() {
                     <div onClick={() => { document.getElementsByClassName("view-students")[0].style.display = 'none' }} >X</div>
                 </div>
                 <div className='view'>
-                    <form>
-                        {/*View Students*/}
-                    </form>
+                    <div className="stud">
+                    {students.map((student) => {
+                    return <Students
+                        sname={student.sname}
+                        suser={student.suser}
+                        semail={student.semail}
+                    />
+                })}
+                    </div>
                 </div>
         </div>
 
@@ -153,6 +189,7 @@ function Dashboard() {
                         cname={company.cname}
                         title={company.title}
                         cutOff={company.cutOff}
+                        description={company.description}
                         branches={company.branches}
                         date={company.date}
 

@@ -22,7 +22,7 @@ return <>
                         </p>
                 </div>
                 <div className="links">
-                    <ul class="footer-lists">
+                    <ul className="footer-lists">
                             <li><a href="https://www.cbit.ac.in//contact-us/">Contact Us</a></li>
                             <li><a href="https://www.cbit.ac.in//academic_post/academic/">Academics </a></li>
                             <li><a href="https://www.cbit.ac.in//admission_post/admissions/">Admissions</a></li>
