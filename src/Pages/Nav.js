@@ -2,7 +2,6 @@ import React from "react";
 import Avatar from '@mui/material/Avatar';
 import { useState } from "react";
 import { db } from "../Firebase";
-import {Switch , Link, Router} from 'react-router-dom'
 function Nav() {
     const [user,setUser] = useState();
     const login = (e) =>{
