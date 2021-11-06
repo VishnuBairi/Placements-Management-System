@@ -6,15 +6,13 @@ function Nav() {
     const [user,setUser] = useState();
     const login = (e) =>{
         e.preventDefault();
-        let sid = document.getElementById('user').value;
-        //let spass = document.getElementById('pass').value;
-        const details = db.collection("Students");
-        const snapshot = details.where('suser','==',sid).get();
-        setUser(snapshot.docs.map((doc)=>({
-            sid:doc.data().suser,
-            sname : doc.data().sname,
-        })))
-        console.log(user);
+            db.collection("Students").onSnapshot((snapshot) => {
+                setUser(snapshot.docs.map((doc) => ({
+                    sid:doc.data().suser,
+                    sname : doc.data().sname,
+                })
+                ))
+            })   
     }
     return (
         <>
