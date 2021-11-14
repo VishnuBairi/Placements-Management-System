@@ -45,7 +45,7 @@ a:hover{
   margin-top: auto;
 }
 .Navbar{
-  background-color: #65cfec;
+  background-color: rgb(146, 179, 235);
   margin-bottom: 20px;
   text-align: end;
   display: grid;
@@ -53,7 +53,7 @@ a:hover{
 }
 .login{
   width: 400px;
-  height: 500px;
+  height: 450px;
   position: absolute;
   background-color: white;
   box-shadow:  0 0 100px rgba(0, 0, 0, 0.87);
@@ -106,6 +106,7 @@ a:hover{
   font-size:15px;
   margin-top: 20px;
   font-weight:100 ;
+  background-color: rgb(243, 176, 176);
 }
 .login .log .forget span{
   color: blue;
@@ -114,7 +115,7 @@ a:hover{
 
 .admin-log{
   width: 400px;
-  height: 500px;
+  height: 450px;
   position: absolute;
   background-color: white;
   box-shadow:  0 0 100px rgba(0, 0, 0, 0.87);
@@ -167,6 +168,7 @@ a:hover{
   font-size:15px;
   margin-top: 20px;
   font-weight:100 ;
+  background-color: rgb(243, 176, 176);
 }
 .admin-log .admin-login .forget span{
   color: blue;

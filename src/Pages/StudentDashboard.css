@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2? family=Poppins:wght@300;400;500;600&display=swap');
 :root{
-    --main-color:	#65cfec;
+    --main-color:	rgb(146, 179, 235);
     
    
 }
@@ -176,113 +176,145 @@ padding-top:10px;
     text-align:left;
     font-size:17px;
 }
-.add-student{
-    width: calc(100% - 300px);
-    height: calc(100% - 50px);
-    position: absolute;
+.cards > .account-info {
+	padding: 40px;
+	margin: auto;
+    color: #222;
+}
+.account-info > div {
+	padding: 40px;
+	margin: auto;
+    color: #222;
+}
+.acc-settings{
     background-color: white;
-    box-shadow:  0 0 100px rgba(0, 0, 0, 0.87);
-    top:0;
     padding: 40px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 9999;
     margin: auto;
-    display: none;
 }
-.add-student > div {
-    font-size: 30px;
-    font-weight: 700;
-    cursor: pointer;
-    display: block;
+.account-info{
+  width: 1000px;
+  border: 12px solid rgb(154, 158, 154);
+  padding: 50px;
+  margin: 20px;
+  font-size:18px;
 }
-.add-student > .student{
-    text-align: center;
+.account-info .title{
+    border-bottom:3px solid lightblue;
+    font-size:28px;
 }
-.view-students{
-    width: calc(100% - 300px);
-    height: calc(100% - 50px);
-    position: absolute;
-    background-color: white;
-    box-shadow:  0 0 100px rgba(0, 0, 0, 0.87);
-    top:0;
-    padding: 40px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 9999;
-    margin: auto;
-    display: none;
+.editing{
+    padding: 3rem 2rem 2rem 2rem;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: rgb(226, 215, 215);
 }
-.view-students > div {
-    font-size: 30px;
-    font-weight: 700;
-    cursor: pointer;
-    display: block;
+.editing > div {
+    display: flex;
+    padding: 0rem 0rem 0.5rem 0rem;
+    font-size: 20px;
+    font-weight: 600;
 }
-.view-students > .view{
-    text-align: center;
-}
-
-.add-company{
-    width: calc(100% - 300px);
-    height: calc(100% - 50px);
-    position: absolute;
-    background-color: white;
-    box-shadow:  0 0 100px rgba(0, 0, 0, 0.87);
-    top:0;
-    padding: 40px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 9999;
-    margin: auto;
-    display: none;
-}
-.add-company > div {
-    font-size: 30px;
-    font-weight: 700;
-    display: block;
-    text-align: center;
-}
-.add-company > .close > div {
+.editing > div > button{
+    width: 80px;
+    background-color: gray;
+    color :rgb(255, 255, 255);
+    border-radius: 4px;
+    border: 1px solid black;
     cursor: pointer;
 }
- 
-.add-company > .add > form{
+.editing > div > h2 {
+    margin-top: 30px;
+    padding-top: 1.5rem;
+}
+.settings > form {
     display: flex;
     flex-direction: column;
+    margin-top: 25px;
+    margin-left: 50px;
 }
-.add-company > .add > form > input{
-    margin-top: 15px;
-    height: 30px;
+.settings > form > div >input{
+    border:none;
+    margin-top: 25px;
+    margin-bottom: 10px;
     font-size: medium;
-    border: none;
-    border-bottom: 2px solid rgb(70, 69, 69);
-}
-.add-company > .add > form > input:focus{
-    outline: none;
-}
-.add-company > .add > form > textarea{
-    margin-top: 10px;
-}
+    padding: 0.7rem 0.7rem 0rem 0.7rem;
+    border-bottom: 2px solid #222;
+} 
+.settings > form > div >input[type=email]{
+    border:none;
+    width: 300px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: medium;
+    padding: 0.7rem 0.7rem 0rem 0.7rem;
+    border-bottom: 2px solid #222;
+} 
 
-
-.add-company > .add > form > button{
-    display:inline-block;
-    margin-top: 10px;
-    background-color:rgb(92, 89, 89);
-    color: rgb(255, 255, 255);
+.settings > form > div >input[type=file]{
+    border:none;
+    width: 300px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: medium;
+    padding: 0.7rem 0.7rem 0rem 0.7rem;
+} 
+.settings > form > div > select{
+    border:none;
+    margin-top: 25px;
+    margin-bottom: 10px;
     width: 100px;
-    height: 40px;
-    border-radius: 5px;
+    height: 30px;
+} 
+.settings > form > div > input:focus{
+    outline: none;
+} 
+
+.settings > form > .setting-buttons{
+    display: flex;
+    justify-content:space-between;
+    padding: 1rem 0.7rem 0rem 0.7rem;
+}
+
+.settings > form > .setting-buttons > button{
+    width: 80px;
+    height: 25px;
+    background-color: gray;
+    color :rgb(255, 255, 255);
+    border-radius: 4px;
+    border: 1px solid black;
     cursor: pointer;
 }
-.add-company > .add > form > textarea:focus{
-    outline: none;
+.help{
+    padding:3rem 4rem 2rem 2rem;
+    height:150px;
+    border:2px solid black;
+    text-align: center;
+    border-radius:5px;
+    background-color: #e3ebbf;
 }
-
+.help a{
+    text-decoration: none;
+    color:rgb(41, 153, 190)
+}
+.feed-back > form{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+.feed-back > form > textarea{
+    padding: 1rem;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.feed-back > form > input{
+    height: 30px;
+    background-color: gray;
+    color: aliceblue;
+    border-radius: 5px;
+    border: 1px solid black;
+    width: 100px;
+    cursor: pointer;
+}
 @media only screen and (max-width:1200px){
    .sidebar{
         width: 70px;

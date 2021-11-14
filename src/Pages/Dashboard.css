@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2? family=Poppins:wght@300;400;500;600&display=swap');
 :root{
-    --main-color:	#65cfec;
+    --main-color:	rgb(154, 175, 212);
 }
 *{
     padding:0;
@@ -17,7 +17,7 @@
     left:0;
     top:0;
     height:100%;
-    background:var(--main-color);
+    background-color:var(--main-color);
     z-index: 100;
     transition: width 300ms;
 }
@@ -225,19 +225,8 @@ padding-top:10px;
 }
 
 .add-student{
-    width: calc(100% - 300px);
-    height: calc(100% - 160px);
-    position: absolute;
     background-color: white;
-    box-shadow:  0 0 100px rgba(0, 0, 0, 0.87);
-    top:0;
     padding: 40px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 9999;
-    margin: auto;
-    display: none;
 }
 .add-student > div {
     font-size: 30px;
@@ -271,6 +260,38 @@ padding-top:10px;
   .add-student > .student > form > button:hover{
     cursor: pointer;
   }
+  .add-student > .student > form > input[type=submit]{
+    margin-top: 20px;
+    height: 30px;
+    background-color: gray;
+    color: aliceblue;
+  }
+  /*
+  .add-student > .student > form > div{
+      display: flex;
+      justify-content:space-evenly;
+      font-size:medium;
+      font-weight: 200;
+      padding: 1rem 2rem 1.5rem 1rem;
+  }
+  .add-student > .student > form > div >div> select{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: none;
+    width: 200px;
+    height: 30px;
+}
+  .add-student > .student > form > div >div> input{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: none;
+    border-bottom: 1.5px solid black;
+    width: 180px;
+}
+.add-student > .student > form > div >div> input:focus{
+    outline: none;
+}
+*/
 .view-students{
     width: calc(100% - 300px);
     height: calc(100% - 50px);
@@ -307,20 +328,8 @@ padding-top:10px;
     justify-content:space-between;
 }
 .add-company{
-    width: calc(100% - 300px);
-    height: calc(100% - 50px);
-    position: absolute;
     background-color: white;
-    box-shadow:  0 0 100px rgba(0, 0, 0, 0.87);
-    top:0;
-    padding: 40px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 9999;
-    margin: auto;
-    display: none;
-   
+    padding: 40px;  
 }
 .add-company > div {
     font-size: 30px;
@@ -364,7 +373,6 @@ padding-top:10px;
 .add-company > .add > form > textarea:focus{
     outline: none;
 }
-
 @media only screen and (max-width:1200px){
    .sidebar{
         width: 70px;

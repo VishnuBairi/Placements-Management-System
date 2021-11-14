@@ -1,159 +1,474 @@
-import React from 'react'
-import { useEffect,useState } from 'react';
-import InsertChartIcon from '@mui/icons-material/InsertChart';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import HelpIcon from '@mui/icons-material/Help';
-import FeedbackIcon from '@mui/icons-material/Feedback';
-import SettingsIcon from '@mui/icons-material/Settings';
-import PersonIcon from '@mui/icons-material/Person';
-import MenuIcon from '@mui/icons-material/Menu';
-import './Dashboard.css'
-import Companies from './Companies';
-import { db } from '../Firebase';
+import React from "react";
+import { useEffect, useState } from "react";
+import InsertChartIcon from "@mui/icons-material/InsertChart";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import HelpIcon from "@mui/icons-material/Help";
+import FeedbackIcon from "@mui/icons-material/Feedback";
+import SettingsIcon from "@mui/icons-material/Settings";
+import PersonIcon from "@mui/icons-material/Person";
+import LogoutIcon from '@mui/icons-material/Logout';
+import MenuIcon from "@mui/icons-material/Menu";
+import "./StudentDashboard.css";
+import Companies from "./Companies";
+import { db, auth } from "../firebase";
+import { useHistory } from "react-router"
+import { Avatar } from "@mui/material";
+import { storage } from "../firebase";
+import { Bar } from 'react-chartjs-2';
+//import {getStorage} from 'firebase/storage'
+//import {getDownload,ref, uploadBytes} from 'firebase/storage'
+
 function StudentDashboard() {
-    var [companies, setCompanies] = useState([]);
-    useEffect(() => {
-        db.collection("Companies").onSnapshot((snapshot) => {
-            setCompanies(snapshot.docs.map((doc) => ({
-                cname: doc.data().cName,
-                title: doc.data().title,
-                cutOff: doc.data().cutOff,
-                branches : doc.data().branches,
-                date: doc.data().date,
-                description:doc.data().description,
-            })
-            ))
+  var [click, setClick] = useState('dash')
+  var [cName, setCName] = useState(["active", "", "", ""])
+  var [companies, setCompanies] = useState([]);
+  useEffect(() => {
+    db.collection("Companies").onSnapshot((snapshot) => {
+      var temp = []
+
+      for (let i of snapshot.docs) {
+        temp.push({
+          cname: i.data().cName,
+          title: i.data().title,
+          cutOff: i.data().cutOff,
+          branches: i.data().branches,
+          date: i.data().date,
+          description: i.data().description,
+          docid: i.id,
         })
-    }, [])
+        //temp.docid = i.id;
+        // console.log(i.id)
+
+      }
+      setCompanies(temp);
+      // snapshot.docs.map(async(doc) => await )
+
+      // setCompanies(
+      //   snapshot.docs.map((doc) => ({;
+      //     cname: doc.data().cName,
+      //     title: doc.data().title,
+      //     cutOff: doc.data().cutOff,
+      //     branches: doc.data().branches,
+      //     date: doc.data().date,
+      //     description: doc.data().description,
+      //   }))
+      // );
+    });
+  }, []);
+
+  const history = useHistory();
+  async function logOut(event) {
+    event.preventDefault();
+    try {
+      await auth.signOut();
+      history.replace('/');
+    }
+    catch {
+
+    }
+  }
+
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        db.collection('Students').onSnapshot(snapshot => {
+          details(user);
+          studDetails(user);
+        })
+      }
+    });
+  }, []);
 
 
-    useEffect(()=>{
-        //let name = document.getElementById()
-        const user = db.collection("Students");
-        //const snapshot = user.where('sname','==',name).get();
-    },[])
-    return (
-        <div>
-            <input type="checkbox" id="nav-toggle" />
-            <div className="sidebar">
-                <div className="sidebar-brand">
-                    <h1><span><img alt="cbit" src="https://www.cbit.ac.in/wp-content/themes/CBIT/images/logo.png" height='80' width='100' /></span></h1>
-                </div>
 
-                <div className="sidebar-menu">
-                    <ul>
-                        <li>
-                            <div id='a' className="active"><span><DashboardIcon /></span>
-                                <span>Dashboard</span> </div>
-                        </li>
-                        <li>
-                            <div id='a' onClick={() => { document.getElementsByClassName("add-student")[0].style.display = 'block' }}><span><AccountCircleIcon /></span>
-                                <span>Account</span> </div>
-                        </li>
-                        <li>
-                            <div id='a' onClick={() => { document.getElementsByClassName("view-students")[0].style.display = 'block' }}><span><SettingsIcon /></span>
-                                <span>Settings</span> </div>
-                        </li>
-                        <li>
-                            <div id='a' onClick={() => { document.getElementsByClassName("add-company")[0].style.display = 'block' }}><span><FeedbackIcon /></span>
-                                <span>Feedback</span> </div>
-                        </li>
+  const details = (user) => {
+    if (user) {
+      db.collection('Students').doc(user.uid).get().then(doc => {
+        // if (localStorage.getItem('type') == 'user') {
+          const html = `
+        <h3>${doc.data().sname}</h3>
+        <h6>${doc.data().sid}</h6>`;
+          document.getElementById('userDetails').innerHTML = html;
+        // }
+      })
+    }
+  }
+  const [uDetails, setUDetails] = useState()
+  const studDetails = (user) => {
+    if (user) {
+      db.collection('Students').doc(user.uid).get().then(doc => {
+        setUDetails({
+          roll: doc.data().sid,
+          stname: doc.data().sname,
+          branch: doc.data().branch,
+          cgpa: doc.data().cgpa,
+          gender: doc.data().gender,
+          contact: doc.data().contact,
+          email: doc.data().semail,
+          resume: doc.data().resume,
+        })
+      })
+    }
+  }
+  const [edit, setEdit] = useState(false);
+  var [stdname, setStdname] = useState('');
+  var [stdbranch, setStdbranch] = useState('CSE');
+  var [stdCgpa, setStdCgpa] = useState('');
+  var [stdgender, setStdgender] = useState('');
+  var [stdcontact, setStdcontact] = useState('');
+  function editing() {
+    setStdname(uDetails.stname);
+    //setStdbranch(uDetails.branch);
+    setStdCgpa(uDetails.cgpa);
+    setStdgender(uDetails.gender);
+    setStdcontact(uDetails.contact);
+  }
 
-                        <li>
-                            <div id='a' href=""><span><HelpIcon /></span>
-                                <span>Help </span> </div>
-                        </li>
-                        <li>
-                            <div id='a' href=""><span><InsertChartIcon /></span>
-                                <span>Insights</span> </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div className="main-content">
-                <header>
-                    <h2>
-                        <label htmlFor="nav-toggle">
-                            <span><MenuIcon /></span>
-                        </label>
-                        Dashboard
-                    </h2>
+  const [fileUrl, setFileUrl] = useState()
+  const onChange = async (e) => {
+    const file = e.target.files[0]
+    const storageRef = storage.ref()
+    const fileRef = storageRef.child('resumes/' + file.name)
+    await fileRef.put(file)
+    setFileUrl(await fileRef.getDownloadURL())
+    // console.log(fileUrl)
+  }
+  const upDate = (e) => {
+    e.preventDefault();
+    try {
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          db.collection('Students').doc(user.uid).set({
+            sname: stdname,
+            sid: uDetails.roll,
+            semail: uDetails.email,
+            branch: stdbranch,
+            cgpa: stdCgpa,
+            gender: stdgender,
+            contact: stdcontact,
+            resume: fileUrl,
+          });
+        }
+      });
+      window.confirm("Data Updated");
+      setEdit(false)
+    }
+    catch {
+    }
+  };
 
-                    <div className="user-wrapper">
-                        <span> <PersonIcon /></span>
-                        <div>
-                            <h4>Nalla Ashok</h4>
-                            <h6>160119733314</h6>
-                        </div>
-                    </div>
-                </header>
+  /**
+  const upDate = (e) => {
+  e.preventDefault();
+  try{
+    auth.onAuthStateChanged(user => {
+      if (user){
+        db.collection('Students').doc(user.uid).set({
+          sname: stdname,
+          sid : uDetails.roll,
+          semail : uDetails.email,
+          branch: stdbranch,
+          cgpa : stdCgpa,
+          gender : stdgender,
+          contact : stdcontact,
+          resume : '',
+        })
+      }
+    });
+  }
+  catch{
+  }
+  };
+   */
+  /**var [upload, setUpload] = useState('');
+var [resume, setResume] = useState();
+const storage = getStorage();
+const upDate = (e) => {
+  e.preventDefault();
+  try{
+    auth.onAuthStateChanged(user => {
+      if (user){
+        db.collection('Students').doc(user.uid).set({
+          sname: stdname,
+          sid : uDetails.roll,
+          semail : uDetails.email,
+          branch: stdbranch,
+          cgpa : stdCgpa,
+          gender : stdgender,
+          contact : stdcontact,
+          resume : '',
+        })
+      }
+    });
+  }
+  catch{
+  }
+  };*/
+  /**
+   * const [file,setFile] = useState()
+  const [fileUrl,setFileUrl] = useState()
+  const onChange = async (e) => {
+    const storageRef = storage.ref()
+    const fileRef = storageRef.child('resumes/'+file.name)
+    await fileRef.put(file)
+    setFileUrl(await fileRef.getDownloadURL())
+    console.log(fileUrl)
+  }
+   */
 
-                {/*Add Student*/}
-                <div className='add-student'>
-                    <div className="close" style={{ width: '100%', textAlign: 'end' }}>
-                        <div onClick={() => { document.getElementsByClassName("add-student")[0].style.display = 'none' }} >X</div>
-                    </div>
-                    <div className='student'>
-                        Here we Post
-                        <form>
-                            {/*Add Student Details*/}
-                        </form>
-                    </div>
-                </div>
+  const [feed, setfeed] = useState('')
 
-                {/*View Students*/}
-                <div className='view-students'>
-                    <div className="close" style={{ width: '100%', textAlign: 'end' }}>
-                        <div onClick={() => { document.getElementsByClassName("view-students")[0].style.display = 'none' }} >X</div>
-                    </div>
-                    <div className='view'>
-                        <form>
-                            {/*View Students*/}
-                        </form>
-                    </div>
-                </div>
+  const feedBack = (e) => {
+    e.preventDefault();
+    setfeed(document.getElementById('feed').value)
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        db.collection('Feedback').doc(user.uid).set({
+          uid : user.uid,
+          feedback : feed,
+        })
+        document.getElementById('feed').value = ''
+      }
+    });
+  }
 
-                {/*Add Company*/}
-                <div className='add-company'>
-                    <div className="close" style={{ width: '100%', textAlign: 'end' }}>
-                        <div onClick={() => { document.getElementsByClassName("add-company")[0].style.display = 'none' }} >X</div>
-                    </div>
-                    <div className='add'>
-                        <h4>ADD COMPANY DETAILS HERE</h4>
-                        <form>
-                            {/*Add Company Details*/}
-                            <input id='name' placeholder='Company Name' />
-                            <input id='title' placeholder='Job Title' />
-                            <textarea id='desc' placeholder='Job Description' cols="30" rows="10"></textarea>
-                            <input id='branch' placeholder='Eligible Branches' />
-                            <input id='cutOff' placeholder='Cut-Off' />
-                            <input id='date' type='date' />
-                            <button type='submit'>Add Company</button>
-                        </form>
-
-                    </div>
-                </div>
-                <main>
-                    <div className="cards">
-                        <div className="card-single">
-                            {companies.map((company) => {
-                                return <Companies
-                                    cname={company.cname}
-                                    title={company.title}
-                                    cutOff={company.cutOff}
-                                    branches={company.branches}
-                                    date={company.date}
-                                    description={company.description}
-
-                                />
-                            })}
-                        </div>
-                    </div>
-                </main>
-            </div>
+  return (
+    <div>
+      <input type="checkbox" id="nav-toggle" />
+      <div className="sidebar">
+        <div className="sidebar-brand">
+          <h1>
+            <span>
+              <img
+                alt="cbit"
+                src="https://www.cbit.ac.in/wp-content/themes/CBIT/images/logo.png"
+                height="80"
+                width="100"
+              />
+            </span>
+          </h1>
         </div>
-    )
+
+        <div className="sidebar-menu">
+          <ul>
+            <li>
+              <div id="a" className={cName[0]} onClick={() => { setCName(["active", "", "", ""]); setClick('dash'); }}>
+                <span>
+                  <DashboardIcon />
+                </span>
+                <span>Dashboard</span>{" "}
+              </div>
+            </li>
+            <li>
+              <div
+                id="a" className={cName[1]}
+                onClick={() => {
+                  setCName(["", "active", "", ""]);
+                  setClick('acc');
+                }}>
+                <span>
+                  <AccountCircleIcon />
+                </span>
+                <span>Account</span>{" "}
+              </div>
+            </li>
+            <li>
+              <div
+                id="a" className={cName[2]}
+                onClick={() => {
+                  setCName(["", "", "active", ""]);
+                  setClick('setting')
+                }}>
+                <span>
+                  <SettingsIcon />
+                </span>
+                <span>Settings</span>{" "}
+              </div>
+            </li>
+            <li>
+              <div id="a" className={cName[3]} onClick={() => { setCName(["", "", "", "active", ""]); setClick('feedback'); }}>
+                <span>
+                  <FeedbackIcon />
+                </span>
+                <span>Feedback</span>{" "}
+              </div>
+            </li>
+
+            <li>
+              <div id="a" className={cName[4]} onClick={() => {
+                setCName(["", "", "", "","active"]);
+                setClick('Help')
+              }}>
+                <span>
+                  <HelpIcon />
+                </span>
+                <span>Help </span>{" "}
+              </div>
+            </li>
+            <li>
+              <div id="a" className={cName[5]} onClick={() => {
+                setCName(["", "", "", "","","active"]);
+                setClick('Insights')}}>
+                <span>
+                  <InsertChartIcon />
+                </span>
+                <span>Insights</span>{" "}
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div className="main-content">
+        <header>
+          <h2>
+            <label htmlFor="nav-toggle">
+              <span>
+                <MenuIcon />
+              </span>
+            </label>
+            Dashboard
+          </h2>
+
+          <div className="user-wrapper">
+            <span>
+              {" "}
+              <PersonIcon />
+            </span>
+            <div id='userDetails'>
+            </div>
+            <div onClick={logOut}>
+              <LogoutIcon />
+            </div>
+          </div>
+        </header>
+        <main>
+          <div className="cards">
+            {click === 'dash' ? <div className="card-single">
+              {companies.map((company) => {
+                return (
+                  <Companies
+                    cname={company.cname}
+                    title={company.title}
+                    cutOff={company.cutOff}
+                    branches={company.branches}
+                    date={company.date}
+                    description={company.description}
+                    docid={company.docid}
+                  />
+                );
+              })}
+            </div> : click === 'acc' ?
+              <div className="account-info">
+                <div className="title">Account Details</div>
+                <div>
+                  Name &nbsp;&nbsp; : {uDetails.stname}<br />
+                  Roll No&nbsp;&nbsp;: {uDetails.roll}<br />
+                  Email &nbsp;&nbsp;&nbsp;&nbsp;:  {uDetails.email}<br />
+                  Branch &nbsp;&nbsp;:  {uDetails.branch}<br />
+                  CGPA &nbsp;&nbsp;&nbsp;:  {uDetails.cgpa}<br />
+                  Gender  &nbsp;:  {uDetails.gender}<br />
+                  Contact &nbsp;: {uDetails.contact}<br />
+                  Resume : <a href={uDetails.resume}>Resume</a>
+                </div>
+              </div> : click === 'setting' ?
+                <div className="acc-setting">
+                  <div className="editing">
+                    <div>ACCOUNT SETTINGS</div>
+                    <div>
+                      <Avatar sx={{ height: 160, width: 160 }}>{uDetails.stname[0]}</Avatar>
+                      &emsp; <h2>{uDetails.stname}</h2>
+                    </div>
+                    <div>
+                      Edit Details : &emsp;
+                      <button onClick={() => { setEdit(true); editing() }}>Edit</button>
+                    </div>
+                  </div>
+                  {edit ? <div className='settings'>
+                    <form>
+                      <div>
+                        Student Email : <input id='stemail' type='email' value={uDetails.email} />
+                      </div>
+                      <div>
+                        Name : <input type='text' value={stdname} onChange={(e) => setStdname(e.target.value)} />
+                      </div>
+                      <div>
+                        Roll No : <input type='text' value={uDetails.roll} />
+                      </div>
+                      <div>
+                        Branch : <select id='Branch' onChange={(e) => setStdbranch(e.target.value)}>
+                          <option name='branch' value="CSE" selected>CSE</option>
+                          <option name='branch' value="ECE">ECE</option>
+                          <option name='branch' value="MECH">MECH</option>
+                          <option name='branch' value="IT">IT</option>
+                          <option name='branch' value="EEE">EEE</option>
+                          <option name='branch' value="CIVIL">CIVIL</option>
+                        </select>
+                      </div>
+                      <div>
+                        CGPA : <input type='text' value={stdCgpa} onChange={(e) => setStdCgpa(e.target.value)} />
+                      </div>
+                      <div>
+                        Gender : <input name='gender' type='radio' value="male" onChange={(e) => setStdgender(e.target.value)} /> Male &emsp;
+                        <input name='gender' type='radio' value="female" onChange={(e) => setStdgender(e.target.value)} /> Female &emsp;
+                        <input name='gender' type='radio' value="others" onChange={(e) => setStdgender(e.target.value)} /> Others &emsp;
+                      </div>
+                      <div>
+                        Contact : <input type='tel' pattern="[0-9]*{10}" value={stdcontact} onChange={(e) => setStdcontact(e.target.value)} />
+                      </div>
+                      <div>
+                        Upload Resume : <input type='file' accept='.pdf' onChange={onChange} />
+                      </div>
+                      <div className="setting-buttons">
+                        <button onClick={() => { setEdit(false); }}>Cancel</button>
+                        <button onClick={upDate}>Update</button>
+                      </div>
+                    </form>
+                  </div> :
+                    <></>}
+                </div> : click === 'Help' ? <div className="help">
+                  <h3>Email: <a href="mailto:admin@cbit.org.in">Mail us</a></h3>
+                  <h3>Contact us:9876543210</h3>
+                </div> :click==='feedback'?
+                <div className="feed-back"><h2>Give us your Feedback</h2>
+                <form onSubmit={feedBack}>
+                  <textarea name="feedback" id="feed" cols="80" rows="10"></textarea>
+                  <input type="submit" value="submit"/>
+                </form> 
+                </div>: <><Bar
+                                data={{
+                                  labels: ['2014-2015', '2015-2016', '2016-2017', '2017-2018', '2018-2019', '2019-2020'],
+                                  datasets: [{
+                                    label: 'No of Students Selected',
+                                    data: [1176, 1335, 1363, 961, 1217, 1219],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                    borderWidth: 2
+                                }]
+                                }}
+                                    height={400}
+                                    width={500}
+                                    options={{ maintainAspectRatio: false }}
+                                /></>}
+          </div>
+        </main>
+      </div>
+    </div>
+  );
 }
 
-export default StudentDashboard
+export default StudentDashboard;
