@@ -1,3 +1,6 @@
+This is placements management project used to maintain information about the student and companies. 
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
