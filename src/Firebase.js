@@ -5,12 +5,13 @@ import 'firebase//compat/firestore';*/
 import firebase from "firebase";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCWdRZXdSp9gxMj8QoK8-adkbqtuluFhwo",
-  authDomain: "placement-management-sys.firebaseapp.com",
-  projectId: "placement-management-sys",
-  storageBucket: "placement-management-sys.appspot.com",
-  messagingSenderId: "544507284867",
-  appId: "1:544507284867:web:7e06816c1eaa0def307ab6",
+  apiKey: "AIzaSyDPCqpGxpgIcGDS2RW4zyVa6OgTWs7hM8g",
+  authDomain: "placements-management-system.firebaseapp.com",
+  projectId: "placements-management-system",
+  storageBucket: "placements-management-system.appspot.com",
+  messagingSenderId: "427444335163",
+  appId: "1:427444335163:web:919f4b128e34bfd263621e",
+  measurementId: "G-2KZ1ZKZ194"
 };
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -19,7 +20,8 @@ const auth = firebaseApp.auth();
 //const storage = getStorage(firebaseApp);
 const storage = firebase.storage();
 
-export { db, auth, storage };
+
+export { db, auth, storage};
 
 /* const firebaseApp = firebase.initializeApp(firebaseConfig);
 const storage = getStorage(firebaseApp);

@@ -14,7 +14,9 @@ import Students from "./Students";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { db, auth } from "../firebase";
 import { useHistory } from "react-router";
-import { Bar } from 'react-chartjs-2'
+import { Bar } from 'react-chartjs-2';
+import emailjs from 'emailjs-com'
+
 
 function Dashboard() {
   var [click, setClick] = useState('dash')
@@ -37,18 +39,6 @@ function Dashboard() {
 
       }
       setCompanies(temp);
-      // snapshot.docs.map(async(doc) => await )
-
-      // setCompanies(
-      //   snapshot.docs.map((doc) => ({;
-      //     cname: doc.data().cName,
-      //     title: doc.data().title,
-      //     cutOff: doc.data().cutOff,
-      //     branches: doc.data().branches,
-      //     date: doc.data().date,
-      //     description: doc.data().description,
-      //   }))
-      // );
     });
   }, []);
   var [students, setStudents] = useState([]);
@@ -71,7 +61,7 @@ function Dashboard() {
     const password = document.getElementById("suser").value;
     const sname = document.getElementById("sname").value;
     //creating user authentication
-    if(password.length===12)
+    if(password.length===10)
     {
       try {
         auth.createUserWithEmailAndPassword(email, password).then(cred => {
@@ -97,6 +87,25 @@ function Dashboard() {
     }
     
   };
+  const sendMailstoEligible = (eligibilty,company) =>{
+    db.collection("Students")
+      .where("cgpa", ">=", eligibilty)
+      .get()
+      .then(snap => {
+          snap.forEach(doc => {
+              emailjs.send(process.env.REACT_APP_EMAIL_SERVICE,process.env.REACT_APP_EMAIL_TEMPLATE,{
+                subject: `${company} Placement Drive`,
+                message: `You are eligible for ${company} Placement Drive \nApply through our Placements Portal ${process.env.REACT_APP_LINK}`,
+                toemail: doc.data().semail,
+                },process.env.REACT_APP_USER_ID).then((result) => {
+                  console.log(result.text);
+              }, (error) => {
+                  console.log(error.text);
+              });
+          });
+      });
+      
+  }
   const addCompany = (e) => {
     e.preventDefault();
     let name = document.getElementById("name").value;
@@ -117,6 +126,7 @@ function Dashboard() {
     });
     window.confirm("Company Added");
     document.getElementById('cform').reset();
+    sendMailstoEligible(cutOff,name);
   }
   else{
     alert("Fill All Fields")
@@ -144,8 +154,8 @@ function Dashboard() {
           <h1>
             <span>
               <img
-                alt="cbit"
-                src="https://www.cbit.ac.in/wp-content/themes/CBIT/images/logo.png"
+                alt="mgit"
+                src="Images/mgitdashboard.png"
                 height="80"
                 width="100"
               />
@@ -261,7 +271,7 @@ function Dashboard() {
                               Add Student Details
                               <form id="sform">
                               <input placeholder="Student Name" id="sname" required />
-                              <input placeholder="Student Id" id="suser" pattern="[0-9]{12}" required />
+                              <input placeholder="Student Id" id="suser" pattern="[0-9]{10}" required />
                               <input type ="email" placeholder="Email Id" id="semail" required />
                               <input type ="submit" value="Add Student" onClick={addStudent}/>
                               </form>
@@ -317,10 +327,10 @@ function Dashboard() {
                                 </div>: 
                                 <><Bar
                                 data={{
-                                  labels: ['2014-2015', '2015-2016', '2016-2017', '2017-2018', '2018-2019', '2019-2020'],
+                                  labels: ['2016-2017', '2017-2018', '2018-2019', '2019-2020', '2020-2021', '2021-2022'],
                                   datasets: [{
                                     label: 'No of Students Selected',
-                                    data: [1176, 1335, 1363, 961, 1217, 1219],
+                                    data: [768, 1020, 1078, 961, 1026,1217],
                                     backgroundColor: [
                                         'rgba(255, 99, 132, 0.2)',
                                         'rgba(54, 162, 235, 0.2)',

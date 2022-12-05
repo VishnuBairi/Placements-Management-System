@@ -4,23 +4,37 @@ import './Companies'
 import { db } from '../firebase'
 function Companies(props) {
     var [click, setClick] = useState(false)
-    const apply = async () => {
-        const upload = db.collection('Companies').doc(props.docid).collection("Applicants").doc(localStorage.getItem("uid"));
-        // console.log(props.docid)
-        await upload.set({
-            uid: localStorage.getItem("uid")
+    const apply = () => {
+        db.collection("Companies").doc(props.docid).onSnapshot((snapshot) => {
+            let eligibilitycutOff = snapshot.data().cutOff;
+            let eligibilitybranch = snapshot.data().branches;
+            eligibilitybranch = eligibilitybranch.split(",")
+      
+            let usercgpa = props.userdata.cgpa;
+            let userbranch = props.userdata.branch;
+            console.log(eligibilitybranch,userbranch)
+            if (usercgpa >= eligibilitycutOff && eligibilitybranch.includes(userbranch)) {
+                const upload = db.collection('Companies').doc(props.docid).collection("Applicants").doc(localStorage.getItem("uid"));
+                //console.log(props.docid)
+                upload.set({
+                    uid: localStorage.getItem("uid")
+                })
+                window.confirm("All the best for you!!")
+            }
+            else{
+                window.confirm("You are not eligible")
+            }
         })
-        window.confirm("All the best for you!!")
+
     }
     const [applicant, setApplicant] = useState([])
     const applicants = async () => {
 
         db.collection("Companies").doc(props.docid).collection("Applicants").onSnapshot(async (snapshot) => {
             async function geter() {
-            var temp = []
-                for(let doc of snapshot.docs){
+                var temp = []
+                for (let doc of snapshot.docs) {
                     const snapsho = await db.collection('Students').doc(doc.data().uid).get()
-                    // console.log(snapsho.data())
                     temp.push({
                         name: snapsho.data().sname,
                         sid: snapsho.data().sid,
@@ -28,35 +42,14 @@ function Companies(props) {
                         resume: snapsho.data().resume,
                     })
                 }
-            console.log(temp)
+                console.log(temp)
                 return temp;
             }
-            setApplicant(await geter())
-            // console.log(applicant)
-            localStorage.setItem('data',JSON.stringify(applicant))
+            await setApplicant(await geter())
+            //console.log(applicant)
+            localStorage.setItem('data', JSON.stringify(await geter()))
             window.open('applicants-list')
         })
-        // db.collection('Companies').doc(props.docid).collection("Applicants").onSnapshot(async (snapshot) => {
-        //     // console.log(snapshot.docs)
-        //     var temp = []
-        //     const nes = async()=>{
-        //         for (let i of snapshot.docs) {
-        //             const user = await db.collection('Students').doc(i.data().uid).get()
-        //             temp.push({
-        //                 name: user.data().sname,
-        //                 sid: user.data().sid,
-        //                 email: user.data().semail,
-        //                 resume: user.data().resume,
-        //             })
-        //         }
-        //     }
-        //     await nes();
-        //     setApplicant(temp);
-        //     // setApplicant()
-        //     // console.log(temp)
-            
-        //     console.log(applicant)
-        // })
     }
 
     return (

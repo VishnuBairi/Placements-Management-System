@@ -17,9 +17,15 @@ function Nav() {
     try {
       setError("");
       setLoading(true);
-      await auth.signInWithEmailAndPassword(adminEmail, adminPass);
-      localStorage.setItem('type','admin')
-      window.location.href="/admin-dashboard"
+      if(process.env.REACT_APP_ADMIN_EMAIL===adminEmail){
+        await auth.signInWithEmailAndPassword(adminEmail, adminPass);
+        localStorage.setItem('type','admin')
+        window.location.href="/admin-dashboard"
+      }
+      else{
+        setError("You are not admin");
+        setLoading(false);
+      }
       // history.push("/admin-dashboard");
       return
     } catch {
@@ -41,11 +47,18 @@ function Nav() {
     try {
       setError("");
       setLoading(true);
-       await auth.signInWithEmailAndPassword(userEmail, userPass);
+      if(process.env.REACT_APP_ADMIN_EMAIL!==userEmail){
+        await auth.signInWithEmailAndPassword(userEmail, userPass);
        localStorage.setItem('type','user')
       // const authw=auth.getAuth()
       // console.log(cred.)uid
       history.push("/student-dashboard");
+      }
+      else{
+        setUerror("You are not student");
+        setLoading(false);
+      }
+       
     } catch {
       setUerror("Incorrect username/password ");
     }
@@ -60,8 +73,8 @@ function Nav() {
     <>
       <div className="Navbar">
         <div className="logo">
-          <img alt="a" src="Images/logo.png" style={{ width: "50px" }} />
-          <div className="title">PLACEMENTS DRIVE</div>
+          <img alt="a" src="Images/mgitlogo.png" style={{ width: "50px" }} />
+          <div className="title">MGIT PLACEMENTS</div>
         </div>
 
         <div className="inernav">
@@ -72,7 +85,7 @@ function Nav() {
                 "block";
             }}
           >
-            Log In
+            Student
           </div>
           <div
             className="admin"

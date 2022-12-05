@@ -1,11 +1,10 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import "./Applications.css";
 function Applications() {
-    //var [data,setData] = useState([])
     useEffect(async() => {
-        let data =await JSON.parse(localStorage.getItem('data'))
-        var str = "";
+        let data = await JSON.parse(localStorage.getItem('data'));
+         var str = "";
         for(let i of data)
         {
             str += "<tr>";

@@ -16,8 +16,6 @@ import { useHistory } from "react-router"
 import { Avatar } from "@mui/material";
 import { storage } from "../firebase";
 import { Bar } from 'react-chartjs-2';
-//import {getStorage} from 'firebase/storage'
-//import {getDownload,ref, uploadBytes} from 'firebase/storage'
 
 function StudentDashboard() {
   var [click, setClick] = useState('dash')
@@ -37,23 +35,8 @@ function StudentDashboard() {
           description: i.data().description,
           docid: i.id,
         })
-        //temp.docid = i.id;
-        // console.log(i.id)
-
       }
       setCompanies(temp);
-      // snapshot.docs.map(async(doc) => await )
-
-      // setCompanies(
-      //   snapshot.docs.map((doc) => ({;
-      //     cname: doc.data().cName,
-      //     title: doc.data().title,
-      //     cutOff: doc.data().cutOff,
-      //     branches: doc.data().branches,
-      //     date: doc.data().date,
-      //     description: doc.data().description,
-      //   }))
-      // );
     });
   }, []);
 
@@ -80,12 +63,13 @@ function StudentDashboard() {
     });
   }, []);
 
-
+  const [userdata, setuserdata] = useState()
 
   const details = (user) => {
     if (user) {
       db.collection('Students').doc(user.uid).get().then(doc => {
         // if (localStorage.getItem('type') == 'user') {
+          setuserdata(doc.data());
           const html = `
         <h3>${doc.data().sname}</h3>
         <h6>${doc.data().sid}</h6>`;
@@ -112,11 +96,11 @@ function StudentDashboard() {
     }
   }
   const [edit, setEdit] = useState(false);
-  var [stdname, setStdname] = useState('');
-  var [stdbranch, setStdbranch] = useState('CSE');
-  var [stdCgpa, setStdCgpa] = useState('');
-  var [stdgender, setStdgender] = useState('');
-  var [stdcontact, setStdcontact] = useState('');
+  const [stdname, setStdname] = useState('');
+  const [stdbranch, setStdbranch] = useState('CSE');
+  const [stdCgpa, setStdCgpa] = useState('');
+  const [stdgender, setStdgender] = useState('');
+  const [stdcontact, setStdcontact] = useState('');
   function editing() {
     setStdname(uDetails.stname);
     //setStdbranch(uDetails.branch);
@@ -132,7 +116,7 @@ function StudentDashboard() {
     const fileRef = storageRef.child('resumes/' + file.name)
     await fileRef.put(file)
     setFileUrl(await fileRef.getDownloadURL())
-    // console.log(fileUrl)
+     console.log(fileUrl)
   }
   const upDate = (e) => {
     e.preventDefault();
@@ -158,64 +142,6 @@ function StudentDashboard() {
     }
   };
 
-  /**
-  const upDate = (e) => {
-  e.preventDefault();
-  try{
-    auth.onAuthStateChanged(user => {
-      if (user){
-        db.collection('Students').doc(user.uid).set({
-          sname: stdname,
-          sid : uDetails.roll,
-          semail : uDetails.email,
-          branch: stdbranch,
-          cgpa : stdCgpa,
-          gender : stdgender,
-          contact : stdcontact,
-          resume : '',
-        })
-      }
-    });
-  }
-  catch{
-  }
-  };
-   */
-  /**var [upload, setUpload] = useState('');
-var [resume, setResume] = useState();
-const storage = getStorage();
-const upDate = (e) => {
-  e.preventDefault();
-  try{
-    auth.onAuthStateChanged(user => {
-      if (user){
-        db.collection('Students').doc(user.uid).set({
-          sname: stdname,
-          sid : uDetails.roll,
-          semail : uDetails.email,
-          branch: stdbranch,
-          cgpa : stdCgpa,
-          gender : stdgender,
-          contact : stdcontact,
-          resume : '',
-        })
-      }
-    });
-  }
-  catch{
-  }
-  };*/
-  /**
-   * const [file,setFile] = useState()
-  const [fileUrl,setFileUrl] = useState()
-  const onChange = async (e) => {
-    const storageRef = storage.ref()
-    const fileRef = storageRef.child('resumes/'+file.name)
-    await fileRef.put(file)
-    setFileUrl(await fileRef.getDownloadURL())
-    console.log(fileUrl)
-  }
-   */
 
   const [feed, setfeed] = useState('')
 
@@ -241,8 +167,8 @@ const upDate = (e) => {
           <h1>
             <span>
               <img
-                alt="cbit"
-                src="https://www.cbit.ac.in/wp-content/themes/CBIT/images/logo.png"
+                alt="mgit"
+                src="Images/mgitdashboard.png"
                 height="80"
                 width="100"
               />
@@ -345,6 +271,7 @@ const upDate = (e) => {
         <main>
           <div className="cards">
             {click === 'dash' ? <div className="card-single">
+            {console.log(uDetails)}
               {companies.map((company) => {
                 return (
                   <Companies
@@ -355,6 +282,7 @@ const upDate = (e) => {
                     date={company.date}
                     description={company.description}
                     docid={company.docid}
+                    userdata = {userdata}
                   />
                 );
               })}
@@ -385,6 +313,7 @@ const upDate = (e) => {
                     </div>
                   </div>
                   {edit ? <div className='settings'>
+                    
                     <form>
                       <div>
                         Student Email : <input id='stemail' type='email' value={uDetails.email} />
@@ -397,7 +326,8 @@ const upDate = (e) => {
                       </div>
                       <div>
                         Branch : <select id='Branch' onChange={(e) => setStdbranch(e.target.value)}>
-                          <option name='branch' value="CSE" selected>CSE</option>
+                          <option name='Select Branch'>Select Branch</option>
+                          <option name='branch' value="CSE" >CSE</option>
                           <option name='branch' value="ECE">ECE</option>
                           <option name='branch' value="MECH">MECH</option>
                           <option name='branch' value="IT">IT</option>
@@ -414,7 +344,7 @@ const upDate = (e) => {
                         <input name='gender' type='radio' value="others" onChange={(e) => setStdgender(e.target.value)} /> Others &emsp;
                       </div>
                       <div>
-                        Contact : <input type='tel' pattern="[0-9]*{10}" value={stdcontact} onChange={(e) => setStdcontact(e.target.value)} />
+                        Contact : <input type='tel' pattern="[0-9]*{12}" value={stdcontact} onChange={(e) => setStdcontact(e.target.value)} />
                       </div>
                       <div>
                         Upload Resume : <input type='file' accept='.pdf' onChange={onChange} />
@@ -427,8 +357,8 @@ const upDate = (e) => {
                   </div> :
                     <></>}
                 </div> : click === 'Help' ? <div className="help">
-                  <h3>Email: <a href="mailto:admin@cbit.org.in">Mail us</a></h3>
-                  <h3>Contact us:9876543210</h3>
+                  <h3>Email: <a href="mailto:admin@mgit.ac.in">Mail us</a></h3>
+                  <h3>Contact us:9849873854</h3>
                 </div> :click==='feedback'?
                 <div className="feed-back"><h2>Give us your Feedback</h2>
                 <form onSubmit={feedBack}>
