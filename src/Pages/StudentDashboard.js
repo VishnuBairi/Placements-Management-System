@@ -123,7 +123,7 @@ function StudentDashboard() {
     try {
       auth.onAuthStateChanged(user => {
         if (user) {
-          db.collection('Students').doc(user.uid).set({
+          db.collection('Students').doc(user.uid).update({
             sname: stdname,
             sid: uDetails.roll,
             semail: uDetails.email,

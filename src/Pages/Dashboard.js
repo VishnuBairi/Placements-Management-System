@@ -65,6 +65,7 @@ function Dashboard() {
     {
       try {
         auth.createUserWithEmailAndPassword(email, password).then(cred => {
+          console.log(cred.user.uid);
           db.collection('Students').doc(cred.user.uid).set({
             sname: sname,
             sid: password,
@@ -76,11 +77,12 @@ function Dashboard() {
             contact: "",// document.getElementById('contact').value,
           })
         });
+        window.confirm("Student Added");
+      document.getElementById("sform").reset();
       }
       catch {
       }
-      window.confirm("Student Added");
-      document.getElementById("sform").reset();
+      
     }
     else{
       alert("Please enter the valid UserId!!")
