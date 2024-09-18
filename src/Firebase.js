@@ -7,6 +7,7 @@ import firebase from "firebase";
 const firebaseConfig = {
   apiKey: "AIzaSyDPCqpGxpgIcGDS2RW4zyVa6OgTWs7hM8g",
   authDomain: "placements-management-system.firebaseapp.com",
+  databaseURL: "https://placements-management-system-default-rtdb.firebaseio.com",
   projectId: "placements-management-system",
   storageBucket: "placements-management-system.appspot.com",
   messagingSenderId: "427444335163",
